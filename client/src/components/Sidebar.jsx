@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Sidebar = ({selectedUser, setSelectedUser}) => {
 
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
   return (
     <div className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll 
