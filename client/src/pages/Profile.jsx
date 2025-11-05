@@ -1,17 +1,35 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import assets from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 
 const Profile = () => {
 
+  const { authUser, updateProfile } = useContext(AuthContext)
+
   const [selectedImg, setSelectedImg] = useState(null)
   const navigate = useNavigate()
-  const [name, setName] = useState('Martin')
-  const [bio, setBio] = useState('What the fuckk')
+  const [name, setName] = useState(authUser.fullName)
+  const [bio, setBio] = useState(authUser.bio)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    navigate('/')
+    if (!selectedImg) {
+      await updateProfile({ fullName: name, bio })
+      navigate('/')
+      return
+    }
+
+    const render = new FileReader()
+    render.readAsDataURL(selectedImg)
+    render.onload = async () => {
+      const base64Image = render.result
+      await updateProfile({ profilePic: base64Image, fullName: name, bio })
+      console.log(authUser);
+      
+      // navigate('/')
+      
+    }
   }
 
   return (
@@ -45,8 +63,9 @@ const Profile = () => {
             Save
           </button>
         </form>
-        <img src={assets.logo_icon} alt="" 
-        className='max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10'/>
+        <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.logo_icon} alt="" 
+        className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10
+        ${selectedImg && 'rounded-full'}`}/>
       </div>
     </div>
   )
