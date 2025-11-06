@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
 import { AuthContext } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Login = () => {
 
@@ -11,7 +13,8 @@ const Login = () => {
     const [bio, setBio] = useState('')
     const [isdataSubmitted, setIsdataSubmitted] = useState(false)
 
-    const { login } = useContext(AuthContext)
+    const { login, authUser } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const onSubmitHandler = (event) => {
       event.preventDefault()
@@ -22,9 +25,13 @@ const Login = () => {
       }
 
       login(currentState === 'Sign Up' ? 'signup' : 'login', { fullName, email, password, bio })
-      console.log();
       
     }
+
+    useEffect(() => {
+      console.log(authUser);
+      
+    }, [authUser])
 
   return (
     <div className='min-h-screen bg-cover bg-center flex items-center

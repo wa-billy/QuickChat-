@@ -13,9 +13,9 @@ const App = () => {
     <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain">
       <Toaster />
       <Routes>
-        <Route path='/' element={authUser ? <Home /> : <Navigate to='/login' />} />
-        <Route path='/profile' element={authUser ? <Profile /> : <Navigate to='/login' />} />
-        <Route path='/login' element={!authUser ? <Login /> : <Navigate to='/'/>} />
+        <Route path='/' element={authUser !== null ? <Home /> : <Navigate to='/login' />} />
+        <Route path='/profile' element={authUser !== null ? <Profile /> : <Navigate to='/login' />} />
+        <Route path='/login' element={authUser === null ? <Login /> : <Navigate to='/'/>} />
       </Routes>
     </div>
   )

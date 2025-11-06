@@ -3,8 +3,8 @@ import axios from 'axios'
 import toast from "react-hot-toast";
 import { io } from 'socket.io-client'
 
-const backendUrl = import.meta.env.BACKEND_URL
 axios.defaults.baseURL = 'http://localhost:4000'
+const backendUrl = axios.defaults.baseURL
 
 export const AuthContext = createContext()
 
@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }) => {
                 toast.success(data.message)
             } else {
                 toast.error(data.message)
-                console.log(credentials);
                 
             }
         } catch (error) {
@@ -97,6 +96,7 @@ export const AuthProvider = ({ children }) => {
             axios.defaults.headers.common['token'] = token
         }
         checkAuth()
+        
     }, [])
 
     const value = {

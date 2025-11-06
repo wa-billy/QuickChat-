@@ -25,9 +25,8 @@ const Profile = () => {
     render.onload = async () => {
       const base64Image = render.result
       await updateProfile({ profilePic: base64Image, fullName: name, bio })
-      console.log(authUser);
       
-      // navigate('/')
+      navigate('/')
       
     }
   }
@@ -44,9 +43,14 @@ const Profile = () => {
           <label className='flex items-center gap-3
           cursor-pointer' htmlFor="avatar">
             <input onChange={(e) => setSelectedImg(e.target.files[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden/>
-            <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} 
-            alt="" className={`w-12 h-12 ${selectedImg && 'rounded-full'}`}/>
-            Upload profile Image
+            {
+              authUser.profilePic === "" && !selectedImg
+              ? <img src={assets.avatar_icon} alt="" 
+              className={`w-12 h-12 ${authUser.profilePic ? 'rounded-full' : 'rounded-full'}`} />
+              : <img src={selectedImg ? URL.createObjectURL(selectedImg) : authUser.profilePic} alt="" 
+              className={`w-12 h-12 rounded-full`}/>
+            }
+          Upload profile Image
           </label>
           <input onChange={(e) => setName(e.target.value)} value={name} 
           type="text" required placeholder='Your Name'
@@ -63,9 +67,16 @@ const Profile = () => {
             Save
           </button>
         </form>
-        <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.logo_icon} alt="" 
-        className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10
-        ${selectedImg && 'rounded-full'}`}/>
+        {
+          authUser.profilePic === "" && !selectedImg
+          ? <img src={assets.avatar_icon} alt="" 
+          className={`w-44  rounded-full mx-10 max-sm:mt-10
+          rounded-full `}/>
+          : <img src={selectedImg ? URL.createObjectURL(selectedImg) : authUser.profilePic} alt="" 
+          className={`w-48 aspect-square rounded-full mx-10 max-sm:mt-10
+          ${selectedImg && 'rounded-full'}`}/>
+          
+        }
       </div>
     </div>
   )
