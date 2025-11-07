@@ -1,3 +1,4 @@
+import { secret } from "../lib/utils.js"
 import userModel from "../models/userModel.js"
 import jwt from 'jsonwebtoken'
 
@@ -6,7 +7,7 @@ import jwt from 'jsonwebtoken'
 export const protectRoute = async (req, res, next) => {
     try {
         const token = req.headers.token
-        const decoded = jwt.verify(token, process.env.SECRET)
+        const decoded = jwt.verify(token, secret)
 
         const user = await userModel.findById(decoded.userId).select("-password")
 

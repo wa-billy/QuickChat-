@@ -9,10 +9,11 @@ import { useEffect } from 'react'
 const Home = () => {
 
     const [selectedUser, setSelectedUser] = useState(false)
-    const { authUser } = useContext(AuthContext)
+    const { authUser, token } = useContext(AuthContext)
 
     useEffect(() => {
         console.log(authUser);
+        console.log(token);
         
     }, [authUser])
 

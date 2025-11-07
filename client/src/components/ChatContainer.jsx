@@ -17,7 +17,7 @@ const ChatContainer = () => {
         // Handle sending messages
         event.preventDefault()
         if (input.trim() === '') return null
-        await sendMessages({ text: input.tirm() })
+        await sendMessages({ text: input.trim() })
         setInput('')
 
     }
